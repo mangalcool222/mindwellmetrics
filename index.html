@@ -3,53 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR Mental Health & Wellbeing Dashboard</title>
+    <title>HR Mental Health & Wellbeing Platform</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div id="login-screen" class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <h1>Mental Health & Wellbeing</h1>
-                <p>Professional wellness tracking platform</p>
+    <!-- Landing Page -->
+    <div id="landing-page" class="landing-container">
+        <div class="landing-content">
+            <div class="landing-header">
+                <h1>🧠 Mental Health & Wellbeing Platform</h1>
+                <p>Professional workplace wellness tracking and analytics</p>
             </div>
             
-            <div class="login-tabs">
-                <button class="tab-btn active" onclick="switchLoginTab('employee')" data-tab="employee">Employee Login</button>
-                <button class="tab-btn" onclick="switchLoginTab('hr')" data-tab="hr">HR Dashboard</button>
+            <div class="landing-actions">
+                <button class="btn btn--primary btn--lg" onclick="showRegister()">Get Started</button>
+                <button class="btn btn--outline btn--lg" onclick="showLogin()">Sign In</button>
             </div>
             
-            <!-- Employee Login -->
-            <div id="employee-login" class="login-form active">
-                <h3>Employee Access</h3>
-                <p>Enter your team code to access your personal wellness dashboard</p>
-                <form id="employee-form" onsubmit="handleEmployeeLogin(event)">
+            <div class="landing-features">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Employee Wellness</h3>
+                    <p>Track stress levels, mood, and personal progress</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>HR Analytics</h3>
+                    <p>View team insights and manage organizational wellbeing</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Secure & Private</h3>
+                    <p>Anonymous data collection with role-based access</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Page -->
+    <div id="register-page" class="auth-container hidden">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Create Account</h2>
+                <p>Join our wellness platform</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchRegisterTab('employee')" data-tab="employee">Employee</button>
+                <button class="tab-btn" onclick="switchRegisterTab('hr')" data-tab="hr">HR</button>
+                <button class="tab-btn" onclick="switchRegisterTab('admin')" data-tab="admin">Admin</button>
+            </div>
+            
+            <!-- Employee Registration -->
+            <div id="employee-register" class="auth-form active">
+                <form onsubmit="handleRegister(event, 'employee')">
                     <div class="form-group">
-                        <label class="form-label">Team Code</label>
-                        <input type="text" class="form-control" id="team-code" placeholder="e.g., TEAM001, DEPT-HR" required>
-                        <small class="form-help">Ask your team lead for your team code</small>
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" name="fullName" required>
                     </div>
-                    <button type="submit" class="btn btn--primary btn--full-width">Access Dashboard</button>
-                </form>
-            </div>
-            
-            <!-- HR Login -->
-            <div id="hr-login" class="login-form">
-                <h3>HR Dashboard Access</h3>
-                <p>Access comprehensive team analytics and insights</p>
-                <form id="hr-form" onsubmit="handleHRLogin(event)">
                     <div class="form-group">
-                        <label class="form-label">Username</label>
-                        <input type="text" class="form-control" id="hr-username" placeholder="admin" required>
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Password</label>
-                        <input type="password" class="form-control" id="hr-password" placeholder="admin123" required>
+                        <input type="password" class="form-control" name="password" required>
                     </div>
-                    <button type="submit" class="btn btn--primary btn--full-width">Login to HR Dashboard</button>
+                    <div class="form-group">
+                        <label class="form-label">Department</label>
+                        <select class="form-control" name="department" required>
+                            <option value="">Select Department</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Human Resources">Human Resources</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Operations">Operations</option>
+                            <option value="Customer Support">Customer Support</option>
+                            <option value="Legal">Legal</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Team</label>
+                        <select class="form-control" name="team" required>
+                            <option value="">Select Team</option>
+                            <option value="Frontend Team">Frontend Team</option>
+                            <option value="Backend Team">Backend Team</option>
+                            <option value="Enterprise Sales">Enterprise Sales</option>
+                            <option value="Inside Sales">Inside Sales</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Create Employee Account</button>
                 </form>
+            </div>
+            
+            <!-- HR Registration -->
+            <div id="hr-register" class="auth-form">
+                <form onsubmit="handleRegister(event, 'hr')">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">HR Department</label>
+                        <select class="form-control" name="department" required>
+                            <option value="Human Resources">Human Resources</option>
+                            <option value="People Operations">People Operations</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Create HR Account</button>
+                </form>
+            </div>
+            
+            <!-- Admin Registration -->
+            <div id="admin-register" class="auth-form">
+                <form onsubmit="handleRegister(event, 'admin')">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Admin Key</label>
+                        <input type="password" class="form-control" name="adminKey" placeholder="Contact system administrator" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Create Admin Account</button>
+                </form>
+            </div>
+            
+            <div class="auth-footer">
+                <p>Already have an account? <a href="#" onclick="showLogin()">Sign In</a></p>
+                <p><a href="#" onclick="showLanding()">← Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page" class="auth-container hidden">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Sign In</h2>
+                <p>Welcome back to your wellness platform</p>
+            </div>
+            
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" required>
+                </div>
+                <button type="submit" class="btn btn--primary btn--full-width">Sign In</button>
+            </form>
+            
+            <div class="demo-accounts">
+                <h4>Demo Accounts</h4>
+                <div class="demo-buttons">
+                    <button class="btn btn--outline btn--sm" onclick="loginDemo('employee')">Demo Employee</button>
+                    <button class="btn btn--outline btn--sm" onclick="loginDemo('hr')">Demo HR</button>
+                    <button class="btn btn--outline btn--sm" onclick="loginDemo('admin')">Demo Admin</button>
+                </div>
+            </div>
+            
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="#" onclick="showRegister()">Sign Up</a></p>
+                <p><a href="#" onclick="showLanding()">← Back to Home</a></p>
             </div>
         </div>
     </div>
@@ -58,82 +194,177 @@
     <div id="employee-dashboard" class="dashboard hidden">
         <nav class="navbar">
             <div class="nav-brand">
-                <h2>Wellness Dashboard</h2>
-                <span class="user-info">Team: <span id="current-team">-</span></span>
+                <h2>🧠 Employee Dashboard</h2>
+                <span class="user-info">Welcome, <span id="employee-name">-</span></span>
             </div>
-            <button id="employee-logout" class="btn btn--outline btn--sm" onclick="handleLogout()">Logout</button>
+            <div class="nav-controls">
+                <div class="motivational-quote" id="daily-quote">💡 Progress, not perfection</div>
+                <button class="btn btn--outline btn--sm" onclick="handleLogout()">Logout</button>
+            </div>
         </nav>
         
-        <div class="dashboard-content">
-            <div class="dashboard-grid">
-                <!-- Survey Section -->
-                <div class="card survey-section">
-                    <div class="card__header">
-                        <h3>Weekly Wellness Check-in</h3>
-                    </div>
-                    <div class="card__body">
-                        <div id="survey-chat" class="chat-container">
-                            <div class="chat-message bot-message">
-                                <div class="message-avatar">🤖</div>
-                                <div class="message-content">
-                                    <p>Hi there! Ready for this week's wellness check-in? It will only take 2 minutes.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="survey-form" class="survey-form">
+        <div class="dashboard-sidebar">
+            <div class="sidebar-nav">
+                <button class="nav-item active" onclick="switchEmployeeTab('survey')" data-tab="survey">
+                    📝 Daily Survey
+                </button>
+                <button class="nav-item" onclick="switchEmployeeTab('analytics')" data-tab="analytics">
+                    📊 My Analytics
+                </button>
+                <button class="nav-item" onclick="switchEmployeeTab('journal')" data-tab="journal">
+                    📔 Personal Journal
+                </button>
+                <button class="nav-item" onclick="switchEmployeeTab('resources')" data-tab="resources">
+                    🎯 Wellness Resources
+                </button>
+            </div>
+        </div>
+        
+        <div class="dashboard-main">
+            <!-- Survey Section -->
+            <div id="employee-survey" class="tab-content active">
+                <div class="content-header">
+                    <h3>Daily Wellness Check-in</h3>
+                    <p>Take a moment to reflect on your wellbeing today</p>
+                </div>
+                
+                <div class="survey-container">
+                    <div class="survey-card">
+                        <div id="survey-form">
                             <div class="survey-progress">
                                 <div class="progress-bar">
-                                    <div class="progress-fill" id="progress-fill"></div>
+                                    <div class="progress-fill" id="survey-progress-fill"></div>
                                 </div>
-                                <span class="progress-text" id="progress-text">Question 1 of 5</span>
+                                <span class="progress-text" id="survey-progress-text">Question 1 of 4</span>
                             </div>
-                            <div id="survey-questions"></div>
+                            <div id="survey-content"></div>
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Analytics Section -->
+            <div id="employee-analytics" class="tab-content">
+                <div class="content-header">
+                    <h3>Your Wellness Journey</h3>
+                    <p>Track your progress over time</p>
+                </div>
                 
-                <!-- Personal Analytics -->
-                <div class="card analytics-section">
-                    <div class="card__header">
-                        <h3>Your Wellness Trends</h3>
+                <div class="analytics-grid">
+                    <div class="card">
+                        <div class="card__header">
+                            <h4>Stress Levels Over Time</h4>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 250px;">
+                                <canvas id="employee-stress-chart"></canvas>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card__body">
-                        <div class="chart-container" style="position: relative; height: 300px;">
-                            <canvas id="personal-stress-chart"></canvas>
+                    
+                    <div class="card">
+                        <div class="card__header">
+                            <h4>Mood Tracking</h4>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 250px;">
+                                <canvas id="employee-mood-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card stats-card">
+                        <div class="card__header">
+                            <h4>Weekly Summary</h4>
+                        </div>
+                        <div class="card__body">
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <span class="stat-label">Avg Stress</span>
+                                    <span class="stat-value" id="avg-stress-stat">6.2</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Avg Mood</span>
+                                    <span class="stat-value" id="avg-mood-stat">7.4</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Days Logged</span>
+                                    <span class="stat-value" id="days-logged-stat">5/7</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Journal Section -->
+            <div id="employee-journal" class="tab-content">
+                <div class="content-header">
+                    <h3>Personal Journal</h3>
+                    <p>Private space for your thoughts and reflections</p>
+                </div>
                 
-                <div class="card">
-                    <div class="card__header">
-                        <h3>Mood & Sleep Patterns</h3>
-                    </div>
-                    <div class="card__body">
-                        <div class="chart-container" style="position: relative; height: 250px;">
-                            <canvas id="personal-mood-chart"></canvas>
+                <div class="journal-container">
+                    <div class="journal-form">
+                        <div class="form-group">
+                            <label class="form-label">Add New Entry</label>
+                            <textarea class="form-control" id="journal-text" placeholder="How are you feeling today? What's on your mind?" rows="4"></textarea>
                         </div>
+                        <button class="btn btn--primary" onclick="addJournalEntry()">Save Entry</button>
+                    </div>
+                    
+                    <div class="journal-entries" id="journal-entries">
+                        <!-- Journal entries will be populated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Resources Section -->
+            <div id="employee-resources" class="tab-content">
+                <div class="content-header">
+                    <h3>Wellness Resources</h3>
+                    <p>Tools and resources to support your mental health</p>
+                </div>
+                
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">🧘</div>
+                        <h4>5-Minute Breathing Exercise</h4>
+                        <p>Simple breathing techniques to reduce stress and anxiety</p>
+                        <button class="btn btn--outline btn--sm" onclick="startBreathingExercise()">Start Exercise</button>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">📚</div>
+                        <h4>Managing Work Stress</h4>
+                        <p>Evidence-based strategies for handling workplace pressure</p>
+                        <button class="btn btn--outline btn--sm" onclick="openResource('stress-guide')">Read Article</button>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">⚖️</div>
+                        <h4>Work-Life Balance Tips</h4>
+                        <p>Practical advice for maintaining healthy boundaries</p>
+                        <button class="btn btn--outline btn--sm" onclick="openResource('work-life-balance')">Learn More</button>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">🎵</div>
+                        <h4>Mindfulness Meditation</h4>
+                        <p>10-minute guided meditation for stress relief</p>
+                        <button class="btn btn--outline btn--sm" onclick="startMeditation()">Start Session</button>
                     </div>
                 </div>
                 
-                <!-- Wellness Tips -->
-                <div class="card wellness-tips">
-                    <div class="card__header">
-                        <h3>Wellness Resources</h3>
-                    </div>
-                    <div class="card__body">
-                        <div class="tips-grid">
-                            <div class="tip-card">
-                                <h4>🧘 Mindfulness</h4>
-                                <p>Try 5 minutes of deep breathing during your break</p>
-                            </div>
-                            <div class="tip-card">
-                                <h4>💤 Better Sleep</h4>
-                                <p>Maintain consistent sleep schedule for better mood</p>
-                            </div>
-                            <div class="tip-card">
-                                <h4>🚶 Take Breaks</h4>
-                                <p>Short walks can reduce stress by up to 25%</p>
-                            </div>
+                <div class="emergency-resources">
+                    <h4>🆘 Need Immediate Support?</h4>
+                    <p>If you're experiencing a mental health crisis, please reach out:</p>
+                    <div class="emergency-contacts">
+                        <div class="contact-item">
+                            <strong>Employee Assistance Program:</strong> 1-800-EAP-HELP
+                        </div>
+                        <div class="contact-item">
+                            <strong>National Crisis Line:</strong> 988
+                        </div>
+                        <div class="contact-item">
+                            <strong>HR Wellness Team:</strong> wellness@company.com
                         </div>
                     </div>
                 </div>
@@ -145,141 +376,383 @@
     <div id="hr-dashboard" class="dashboard hidden">
         <nav class="navbar">
             <div class="nav-brand">
-                <h2>HR Analytics Dashboard</h2>
-                <span class="user-info">Administrator</span>
+                <h2>👥 HR Analytics Dashboard</h2>
+                <span class="user-info">HR Manager Dashboard</span>
             </div>
             <div class="nav-controls">
-                <select id="time-filter" class="form-control" onchange="updateHRDashboard()">
-                    <option value="weekly">Weekly View</option>
-                    <option value="monthly">Monthly View</option>
+                <select class="form-control" id="time-period" onchange="updateHRDashboard()">
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                    <option value="quarter">This Quarter</option>
                 </select>
-                <button id="hr-logout" class="btn btn--outline btn--sm" onclick="handleLogout()">Logout</button>
+                <button class="btn btn--outline btn--sm" onclick="downloadHRReport()">📊 Export Report</button>
+                <button class="btn btn--outline btn--sm" onclick="handleLogout()">Logout</button>
             </div>
         </nav>
         
-        <div class="dashboard-content">
+        <div class="dashboard-main full-width">
             <!-- Key Metrics -->
-            <div class="metrics-grid">
+            <div class="metrics-section">
                 <div class="metric-card">
                     <div class="metric-icon">📊</div>
                     <div class="metric-info">
-                        <h3 id="total-responses">92</h3>
-                        <p>Survey Responses</p>
+                        <h3 id="total-employees">113</h3>
+                        <p>Total Employees</p>
                     </div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-icon">📈</div>
                     <div class="metric-info">
-                        <h3 id="avg-stress">6.6</h3>
-                        <p>Average Stress Level</p>
+                        <h3 id="participation-rate">87%</h3>
+                        <p>Survey Participation</p>
                     </div>
                 </div>
-                <div class="metric-card alert-card">
+                <div class="metric-card alert-metric">
                     <div class="metric-icon">⚠️</div>
                     <div class="metric-info">
-                        <h3 id="high-stress-percent">28%</h3>
+                        <h3 id="high-stress-count">32</h3>
                         <p>High Stress Employees</p>
                     </div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-icon">🏢</div>
+                    <div class="metric-icon">📋</div>
                     <div class="metric-info">
-                        <h3 id="most-stressed-dept">Sales</h3>
-                        <p>Most Stressed Dept</p>
+                        <h3 id="avg-wellbeing">6.8</h3>
+                        <p>Avg Wellbeing Score</p>
                     </div>
                 </div>
             </div>
             
-            <!-- Charts Grid -->
-            <div class="charts-grid">
-                <div class="card">
-                    <div class="card__header">
-                        <h3>Stress Levels by Department</h3>
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <div class="chart-row">
+                    <div class="card chart-card">
+                        <div class="card__header">
+                            <h4>Stress Levels by Department</h4>
+                            <span class="chart-info">Anonymous aggregated data</span>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="hr-dept-stress-chart"></canvas>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card__body">
-                        <div class="chart-container" style="position: relative; height: 300px;">
-                            <canvas id="department-stress-chart"></canvas>
+                    
+                    <div class="card chart-card">
+                        <div class="card__header">
+                            <h4>Wellbeing Trends</h4>
+                            <span class="chart-info">Last 12 weeks</span>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="hr-trends-chart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="card">
-                    <div class="card__header">
-                        <h3>Stress Trends Over Time</h3>
-                    </div>
-                    <div class="card__body">
-                        <div class="chart-container" style="position: relative; height: 300px;">
-                            <canvas id="stress-trends-chart"></canvas>
+                <div class="chart-row">
+                    <div class="card chart-card">
+                        <div class="card__header">
+                            <h4>Stress Distribution</h4>
+                            <span class="chart-info">Current week breakdown</span>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="hr-distribution-chart"></canvas>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card__header">
-                        <h3>Workload Distribution</h3>
-                    </div>
-                    <div class="card__body">
-                        <div class="chart-container" style="position: relative; height: 300px;">
-                            <canvas id="workload-chart"></canvas>
+                    
+                    <div class="card chart-card">
+                        <div class="card__header">
+                            <h4>Team Participation</h4>
+                            <span class="chart-info">Survey completion rates</span>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card__header">
-                        <h3>Sleep Patterns by Department</h3>
-                    </div>
-                    <div class="card__body">
-                        <div class="chart-container" style="position: relative; height: 300px;">
-                            <canvas id="sleep-chart"></canvas>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="hr-participation-chart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Interventions Section -->
+            <!-- Interventions & Alerts -->
             <div class="interventions-section">
                 <div class="card">
                     <div class="card__header">
-                        <h3>Recommended Interventions</h3>
+                        <h4>🚨 Priority Interventions</h4>
                     </div>
                     <div class="card__body">
-                        <div id="interventions-list" class="interventions-list"></div>
+                        <div id="priority-alerts" class="alerts-list"></div>
                     </div>
                 </div>
                 
                 <div class="card">
                     <div class="card__header">
-                        <h3>Weekly Report</h3>
+                        <h4>💡 Recommended Actions</h4>
                     </div>
                     <div class="card__body">
-                        <div class="report-summary">
-                            <p>Current week shows <strong>28% of employees</strong> reporting high stress levels.</p>
-                            <p><strong>Sales department</strong> needs immediate attention with 8.1 average stress level.</p>
-                            <p>Recommend implementing stress management workshops and flexible schedules.</p>
-                        </div>
-                        <button class="btn btn--secondary" id="download-report" onclick="downloadReport()">Download Full Report</button>
+                        <div id="recommendations" class="recommendations-list"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Success Modal -->
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="dashboard hidden">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h2>🔐 Admin Dashboard</h2>
+                <span class="user-info">System Administrator</span>
+            </div>
+            <div class="nav-controls">
+                <button class="btn btn--outline btn--sm" onclick="exportSystemData()">📥 Export Data</button>
+                <button class="btn btn--outline btn--sm" onclick="handleLogout()">Logout</button>
+            </div>
+        </nav>
+        
+        <div class="dashboard-sidebar">
+            <div class="sidebar-nav">
+                <button class="nav-item active" onclick="switchAdminTab('overview')" data-tab="overview">
+                    📊 System Overview
+                </button>
+                <button class="nav-item" onclick="switchAdminTab('users')" data-tab="users">
+                    👥 User Management
+                </button>
+                <button class="nav-item" onclick="switchAdminTab('data')" data-tab="data">
+                    💾 Data Management
+                </button>
+                <button class="nav-item" onclick="switchAdminTab('settings')" data-tab="settings">
+                    ⚙️ System Settings
+                </button>
+            </div>
+        </div>
+        
+        <div class="dashboard-main">
+            <!-- System Overview -->
+            <div id="admin-overview" class="tab-content active">
+                <div class="content-header">
+                    <h3>System Overview</h3>
+                    <p>Complete platform analytics and monitoring</p>
+                </div>
+                
+                <div class="admin-metrics">
+                    <div class="metric-card">
+                        <div class="metric-icon">👤</div>
+                        <div class="metric-info">
+                            <h3 id="total-users">156</h3>
+                            <p>Total Users</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📝</div>
+                        <div class="metric-info">
+                            <h3 id="total-entries">2,847</h3>
+                            <p>Stress Entries</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📊</div>
+                        <div class="metric-info">
+                            <h3 id="avg-response-time">2.3s</h3>
+                            <p>Avg Response Time</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">🔒</div>
+                        <div class="metric-info">
+                            <h3 id="security-score">98%</h3>
+                            <p>Security Score</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-charts">
+                    <div class="card">
+                        <div class="card__header">
+                            <h4>User Activity Over Time</h4>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="admin-activity-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Management -->
+            <div id="admin-users" class="tab-content">
+                <div class="content-header">
+                    <h3>User Management</h3>
+                    <p>Manage all system users and their roles</p>
+                </div>
+                
+                <div class="users-table-container">
+                    <div class="table-controls">
+                        <input type="text" class="form-control" placeholder="Search users..." id="user-search">
+                        <select class="form-control" id="role-filter">
+                            <option value="">All Roles</option>
+                            <option value="employee">Employees</option>
+                            <option value="hr">HR</option>
+                            <option value="admin">Admins</option>
+                        </select>
+                    </div>
+                    
+                    <div class="users-table">
+                        <table id="users-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body">
+                                <!-- Users will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Data Management -->
+            <div id="admin-data" class="tab-content">
+                <div class="content-header">
+                    <h3>Data Management</h3>
+                    <p>View and manage all system data</p>
+                </div>
+                
+                <div class="data-actions">
+                    <button class="btn btn--primary" onclick="viewStressData()">View Stress Entries</button>
+                    <button class="btn btn--outline" onclick="viewJournalData()">View Journal Entries</button>
+                    <button class="btn btn--secondary" onclick="exportAllData()">Export All Data</button>
+                    <button class="btn btn--outline" onclick="showDataBackup()">Backup Data</button>
+                </div>
+                
+                <div class="data-stats">
+                    <div class="card">
+                        <div class="card__header">
+                            <h4>Data Statistics</h4>
+                        </div>
+                        <div class="card__body">
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <span class="stat-label">Total Stress Entries</span>
+                                    <span class="stat-value">2,847</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Journal Entries</span>
+                                    <span class="stat-value">1,293</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Data Size</span>
+                                    <span class="stat-value">15.2 MB</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Last Backup</span>
+                                    <span class="stat-value">2 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- System Settings -->
+            <div id="admin-settings" class="tab-content">
+                <div class="content-header">
+                    <h3>System Settings</h3>
+                    <p>Configure platform settings and preferences</p>
+                </div>
+                
+                <div class="settings-sections">
+                    <div class="card">
+                        <div class="card__header">
+                            <h4>Security Settings</h4>
+                        </div>
+                        <div class="card__body">
+                            <div class="form-group">
+                                <label class="form-label">Password Requirements</label>
+                                <select class="form-control">
+                                    <option value="standard">Standard (8+ characters)</option>
+                                    <option value="strong">Strong (12+ characters, mixed case, symbols)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Session Timeout (minutes)</label>
+                                <input type="number" class="form-control" value="60" min="15" max="480">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card__header">
+                            <h4>Survey Settings</h4>
+                        </div>
+                        <div class="card__body">
+                            <div class="form-group">
+                                <label class="form-label">Survey Frequency</label>
+                                <select class="form-control">
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly" selected>Weekly</option>
+                                    <option value="biweekly">Bi-weekly</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Reminder Notifications</label>
+                                <div class="checkbox-group">
+                                    <label><input type="checkbox" checked> Email reminders</label>
+                                    <label><input type="checkbox" checked> Dashboard notifications</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="breathing-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🧘 Breathing Exercise</h3>
+                <button class="modal-close" onclick="closeModal('breathing-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="breathing-exercise">
+                    <div class="breathing-circle" id="breathing-circle"></div>
+                    <div class="breathing-text" id="breathing-text">Click start to begin</div>
+                    <div class="breathing-controls">
+                        <button class="btn btn--primary" id="breathing-start" onclick="startBreathing()">Start</button>
+                        <button class="btn btn--outline" id="breathing-stop" onclick="stopBreathing()" disabled>Stop</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="success-modal" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Thank You! 🎉</h3>
+                <h3>✅ Success!</h3>
             </div>
             <div class="modal-body">
-                <p>Your wellness check-in has been submitted successfully.</p>
+                <p id="success-message">Operation completed successfully.</p>
                 <div class="motivational-tip">
-                    <h4>💡 Today's Wellness Tip</h4>
-                    <p id="daily-tip">Remember to take regular breaks and practice deep breathing to manage stress effectively.</p>
+                    <h4>💡 Wellness Tip</h4>
+                    <p id="success-tip">Remember that taking care of your mental health is just as important as your physical health.</p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn--primary" id="close-modal" onclick="closeModal()">Continue</button>
+                <button class="btn btn--primary" onclick="closeModal('success-modal')">Continue</button>
             </div>
         </div>
     </div>
